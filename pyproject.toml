@@ -1,7 +1,47 @@
 [tool.ruff]
+# Максимальная длина строки
 line-length = 119
-exclude = ["migrations", "venv", ".ruff_cache"]
+
+# Исключаем папки, где проверка не нужна
+exclude = [
+    ".venv",
+    "venv",
+    "migrations",
+    ".ruff_cache",
+    "__pycache__",
+    "staticfiles",
+]
+
+# Разрешённые форматы файлов
+target-version = "py311"  # Задай свою версию Python (например, py310 или py39)
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "B", "C4", "UP", "SIM"]
-ignore = []
+# Подключаем категории правил
+select = [
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "I",    # isort (импорты)
+    "B",    # bugbear (часто используемые ошибки)
+    "DJ",   # Django-specific rules
+    "C4",   # comprehensions
+    "UP",   # pyupgrade (обновление синтаксиса)
+    "SIM",  # упрощения кода
+]
+
+# Игнорируем отдельные часто спорные или ненужные правила
+ignore = [
+    "B008",  # do not perform function calls in argument defaults (часто валидно в Django)
+    "DJ001", # model must define class Meta (можно опционально)
+]
+
+# Убираем предупреждение, если какие-то ошибки в будущем захотим игнорировать
+fixable = ["ALL"]      # Разрешить автофиксы
+unfixable = []         # Запретить автофиксы для определённых правил, если нужно
+
+# Порядок импорта
+[tool.ruff.lint.isort]
+known-first-party = ["apps", "config"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+lines-between-types = 1
+lines-between-sections = 1
+force-wrap-aliases = true
