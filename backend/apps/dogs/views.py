@@ -2,8 +2,10 @@ from rest_framework import viewsets
 from django.db.models import Count, Avg, Subquery, OuterRef
 from .models import Dog, Breed
 from .serializers import DogSerializer, BreedSerializer
+from drf_yasg.utils import swagger_auto_schema
 
 
+@swagger_auto_schema(operation_description="Собаки")
 class DogViewSet(viewsets.ModelViewSet):
     """Вьюсет для управления собаками.
 
